@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/earlyaccess/nikukyu.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/stylesheet.css}" type="text/css">
+    <title>ぬいぐるみマンション</title>
+</head>
+
+<body>
+    <div class="background">
+        <div class="zentai">
+            <header>
+                <div class="container">
+                    <div class="header-left">
+                        <a href="/mansion/home" style="text-decoration: none; color: inherit;">
+                            <h1>ヌイグルミマンション</h1>
+                        </a>
+                    </div>
+                    <div class="header-right">
+                        <button type="button" class="entry-btn" onclick="location.href='/mansion/nyukyo'">入居</button>
+                    </div>
+                </div>
+            </header>
+            <div class="maincontainer">
+                <form th:action="@{/mansion/home}" method="GET">
+                    <div class="search-container">
+                        <div class="search-item">
+                            <label for="search-box">名前部分一致</label>
+                            <input type="text" id="search-box" name="name" th:value="${name}" placeholder="名前で絞り込み">
+                        </div>
+
+                        <div class="search-item">
+                            <label for="search-status-select">ステータス</label>
+                            <select id="search-status-select" name="now">
+                                <option value="" th:selected="${now == null || now == ''}">選択してください</option>
+                                <option value="入居中" th:selected="${now == '入居中'}">入居中</option>
+                                <option value="退去" th:selected="${now == '退去'}">退去</option>
+                            </select>
+
+                        </div>
+
+                        <div class="search-item">
+                            <label for="search-created_date-box">登録日(以前)</label>
+                            <input type="date" class="search-created_date-box" name="created_date_before"
+                                th:value="${created_date_before}">
+                        </div>
+
+                        <div class="search-item">
+                            <label for="search-created_date-box">登録日(以降)</label>
+                            <input type="date" class="search-created_date-box" name="created_date_after"
+                                th:value="${created_date_after}">
+                        </div>
+
+                        <div class="search-item">
+                            <label for="search-washing-box">洗濯日(以前)</label>
+                            <input type="date" class="search-washing-box" name="washing_before"
+                                th:value="${washing_before}">
+                        </div>
+
+                        <div class="search-item">
+                            <label for="search-washing-box">洗濯日(以降)</label>
+                            <input type="date" class="search-washing-box" name="washing_after"
+                                th:value="${washing_after}">
+                        </div>
+                        <div>
+                            <label for="search-btn"></label>
+                            <button type="submit" id="search-btn">検索</button>
+                        </div>
+                        <div>
+                            <label for="reset"></label>
+                            <button type="button" id="reset" onclick="location.href='/mansion/home'">リセット</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="img-list-container">
+                <div th:each="image : ${images}" class="image-container">
+                    <form th:action="@{/mansion/profiel}" method="GET">
+                        <input type="hidden" name="id" th:value="${image.id}">
+                        <input type="hidden" name="name" th:value="${name}">
+                        <input type="hidden" name="now" th:value="${now}">
+                        <input type="hidden" name="created_date_before" th:value="${created_date_before}">
+                        <input type="hidden" name="created_date_after" th:value="${created_date_after}">
+                        <input type="hidden" name="washing_before" th:value="${washing_before}">
+                        <input type="hidden" name="washing_after" th:value="${washing_after}">
+                        <input type="image" th:src="'data:image/png;base64,' + ${image.image}" alt="画像" class="clickable-image">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

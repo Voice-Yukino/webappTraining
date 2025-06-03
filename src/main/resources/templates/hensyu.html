@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/earlyaccess/nikukyu.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/stylesheet.css}" type="text/css">
+    <title>プロフィール編集</title>
+    <script src="/js/hensyu.js"></script>
+</head>
+
+<body>
+    <div class="background">
+        <header>
+            <div class="container">
+                <div class="header-left">
+                    <a href="/mansion/home" style="text-decoration: none; color: inherit;">
+                        <h1>ヌイグルミマンション</h1>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <form th:action="@{/mansion/update}" method="POST" enctype="multipart/form-data">
+                <div class="custom">
+                    <div class="h1-container">
+                        <h1>編集</h1>
+                        <button type="submit" class="save-btn">更新</button>
+                        <button type="button" class="delete-btn" th:onclick="|deleteRecord(${data.id})|">削除</button>
+                        <button type="button" class="back-btn" onclick="window.history.back()">戻る</button>
+                    </div>
+                    <div class="input-container">
+                        <label class="img-update-label">
+                            <input type="file" name="img" accept="image/*" id="img-input" onchange="previewImage(event)"
+                                style="display: none;">
+                            <img src="/images/default.png" alt="画像を選択" id="img-preview" class="img-preview">
+                        </label>
+                        <input type="hidden" name="id" th:value="${data.id}">
+                        <input type="text" maxlength="20" name="name" id="name-input" th:value="${data.name}" placeholder="名前を入力">
+                        <!-- エラーメッセージ -->
+                        <p th:if="${error != null}" th:text="${error}"></p>
+                    </div>
+
+                    <table>
+                        <tr>
+                            <th>登録日</th>
+                            <th>住所</th>
+                            <th>出身地</th>
+                            <th>お風呂</th>
+                            <th>現在</th>
+                        </tr>
+                        <tr>
+                            <td><input type="date" name="created_date" th:value="${data.created_date}"></td>
+                            <td><input type="text" maxlength="20" name="place" th:value="${data.place}" placeholder="住所を入力"></td>
+                            <td><input type="text" maxlength="20" name="hometown" th:value="${data.hometown}" placeholder="出身地を入力">
+                            </td>
+                            <td><input type="date" name="washing" th:value="${data.washing}"></td>
+                            <td>
+                                <select name="now" id="status-select" th:value="${data.now}">
+                                    <option value="入居中">入居中</option>
+                                    <option value="退去">退去</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="memo-table">
+                        <tr>
+                            <th>
+                                <textarea maxlength="150" name="memo" th:text="${data.memo}" placeholder="メモを入力..."></textarea>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
