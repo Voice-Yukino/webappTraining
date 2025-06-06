@@ -1,3 +1,4 @@
+/* 共通CSS */
 * {
   box-sizing: border-box;
   font-family: "M PLUS Rounded 1c";
@@ -10,7 +11,7 @@ body {
 .background {
   width: 100%;
   min-height: 100vh;
-  background-image: url(https://sozaino.site/wp-content/uploads/2023/10/okumono-hoshi27.png);
+  background-image: url(/images/haikei.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
@@ -27,6 +28,69 @@ body {
   margin: 0 auto;
 }
 
+header {
+  height: 65px;
+  width: 100%;
+  background-color: opacity 0.5;
+  top: 0;
+  z-index: 10;
+}
+
+.header-left {
+  float: left;
+}
+
+.header-left h1 {
+  font-family: "Nikukyu";
+  font-size: 40px;
+  text-shadow:
+    3px 3px 3px #ffff,
+    -3px -3px 3px #ffff,
+    -3px 3px 3px #ffff,
+    3px -3px 3px #ffff,
+    3px 0px 3px #ffff,
+    -3px -0px 3px #ffff,
+    0px 3px 3px #ffff,
+    0px -3px 3px #ffff;
+}
+
+.header-right {
+  float: right;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #003067;
+  text-shadow:
+    3px 3px 3px #ffff,
+    -3px -3px 3px #ffff,
+    -3px 3px 3px #ffff,
+    3px -3px 3px #ffff,
+    3px 0px 3px #ffff,
+    -3px -0px 3px #ffff,
+    0px 3px 3px #ffff,
+    0px -3px 3px #ffff;
+}
+
+.back-btn {
+  padding: 20px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #003067;
+  background: #b3f9d6;
+  border: 3px solid #7172a5;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background-color: #94f7c6;
+}
+
+
+/* ホーム画面CSS */
 .zentai {
   overflow-y: scroll;
   max-height: 650px;
@@ -59,96 +123,28 @@ body {
   gap: 5px;
 }
 
+.entry-btn {
+  width: 220px;
+  padding: 10px 15px;
+  margin-top: 29px;
+  font-size: 18px;
+  color: #003067;
+  font-weight: bold;
+  background: #b3f9d6;
+  border: 3px solid #7172a5;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.entry-btn:hover {
+  background-color: #94f7c6;
+}
+
 .search-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, auto);
   gap: 10px;
-}
-
-.img-list-container {
-  position: relative;
-  /* top: 100px; */
-  /* overflow-y: scroll; */
-  max-width: 1100px;
-  width: 100%;
-  /* max-height: 400px; */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  padding-top: 30px;
-  /* スクロールバー分のズレ調整 */
-  padding-left: 13px;
-  margin: 0 auto;
-}
-
-.search-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-label {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #003067;
-  text-shadow:
-    3px 3px 3px #ffff,
-    -3px -3px 3px #ffff,
-    -3px 3px 3px #ffff,
-    3px -3px 3px #ffff,
-    3px 0px 3px #ffff,
-    -3px -0px 3px #ffff,
-    0px 3px 3px #ffff,
-    0px -3px 3px #ffff;
-}
-
-
-img {
-  width: 150px;
-  height: auto;
-  border: 3px solid #7172a5;
-  border-radius: 50px;
-}
-
-.clickable-image {
-  width: 150px;
-  height: auto;
-  border: 3px solid #7172a5;
-  border-radius: 50px;
-}
-
-header {
-  height: 65px;
-  width: 100%;
-  background-color: opacity 0.5;
-  /* position: fixed; */
-  top: 0;
-  z-index: 10;
-}
-
-.header-left {
-  float: left;
-}
-
-.header-left h1 {
-  font-family: "Nikukyu";
-  font-size: 40px;
-  text-shadow:
-    3px 3px 3px #ffff,
-    -3px -3px 3px #ffff,
-    -3px 3px 3px #ffff,
-    3px -3px 3px #ffff,
-    3px 0px 3px #ffff,
-    -3px -0px 3px #ffff,
-    0px 3px 3px #ffff,
-    0px -3px 3px #ffff;
-}
-
-.header-right {
-  float: right;
 }
 
 #search-box,
@@ -185,23 +181,35 @@ header {
   background-color: rgb(1, 34, 71);
 }
 
-.entry-btn {
-  width: 220px;
-  padding: 10px 15px;
-  margin-top: 29px;
-  font-size: 18px;
-  color: #003067;
-  font-weight: bold;
-  background: #b3f9d6;
+.img-list-container {
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding-top: 30px;
+  /* スクロールバー分のズレ調整 */
+  padding-left: 13px;
+  margin: 0 auto;
+}
+
+.search-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.clickable-image {
+  width: 150px;
+  height: auto;
   border: 3px solid #7172a5;
   border-radius: 50px;
-  cursor: pointer;
 }
 
-.entry-btn:hover {
-  background-color: #94f7c6;
-}
 
+/* 情報表示画面 */
 .prf {
   height: 100%;
   width: 100%;
@@ -211,8 +219,11 @@ header {
 
 .prf img {
   float: left;
+  width: 150px;
   height: 150px;
   width: auto;
+  border: 3px solid #7172a5;
+  border-radius: 50px;
   margin-bottom: 20px;
 }
 
@@ -267,22 +278,6 @@ td {
   word-wrap: break-word;
 }
 
-.edit-btn {
-  padding: 20px 15px;
-  margin-left: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #003067;
-  background: #b3f9d6;
-  border: 3px solid #7172a5;
-  border-radius: 50px;
-  cursor: pointer;
-}
-
-.edit-btn:hover {
-  background-color: #94f7c6;
-}
-
 .memo-table {
   width: 900px;
   border-collapse: separate;
@@ -302,6 +297,22 @@ td {
   padding: 15px;
   border: 2px solid #7172a5;
   border-radius: 20px;
+}
+
+.edit-btn {
+  padding: 20px 15px;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #003067;
+  background: #b3f9d6;
+  border: 3px solid #7172a5;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: #94f7c6;
 }
 
 .pagination {
@@ -331,6 +342,7 @@ td {
 }
 
 
+/* 編集画面・登録画面 */
 .custom {
   height: 100%;
   width: 100%;
@@ -346,6 +358,34 @@ td {
   background-color: #FDF6E3;
   border-radius: 5px;
   display: inline-block;
+}
+
+.img-preview {
+  width: 150px;
+  height: 150px;
+  border: 3px solid #7172a5;
+  border-radius: 50px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.img-update-label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.img-update-button {
+  width: 250px;
+  height: 150px;
+  color: #003067;
+  background-color: #b3f9d6;
+  border: 2px solid #7172a5;
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .input-container {
@@ -416,6 +456,17 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
+#status-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 2px solid #7172a5;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #003067;
+  cursor: pointer;
+}
+
 textarea {
   width: 100%;
   height: 60px;
@@ -458,58 +509,4 @@ textarea {
 
 .delete-btn:hover {
   background-color: #f3fb86;
-}
-
-.back-btn {
-  padding: 20px 15px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #003067;
-  background: #b3f9d6;
-  border: 3px solid #7172a5;
-  border-radius: 50px;
-  cursor: pointer;
-}
-
-.back-btn:hover {
-  background-color: #94f7c6;
-}
-
-#status-select {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border: 2px solid #7172a5;
-  border-radius: 5px;
-  background-color: #ffffff;
-  color: #003067;
-  cursor: pointer;
-}
-
-.img-preview {
-  width: 150px;
-  height: 150px;
-  border: 3px solid #7172a5;
-  border-radius: 50px;
-  object-fit: cover;
-  cursor: pointer;
-}
-
-.img-update-label {
-  display: inline-block;
-  cursor: pointer;
-}
-
-.img-update-button {
-  width: 250px;
-  height: 150px;
-  color: #003067;
-  background-color: #b3f9d6;
-  border: 2px solid #7172a5;
-  border-radius: 50px;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
