@@ -54,7 +54,7 @@
                         </tr>
                         <tr>
                             <td><input type="date" name="created_date"
-                                    value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"></td>
+                                        th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"></td>
                             <td><input type="text" maxlength="20" name="place" placeholder="住所を入力"></td>
                             <td><input type="text" maxlength="20" name="hometown" placeholder="出身地を入力"></td>
                             <td><select id="status-select" name="now">

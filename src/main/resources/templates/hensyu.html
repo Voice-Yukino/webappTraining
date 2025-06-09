@@ -52,11 +52,11 @@
                             <th>現在</th>
                         </tr>
                         <tr>
-                            <td><input type="date" name="created_date" th:value="${data.created_date}"></td>
+                            <td><input type="date" name="created_date" th:value="${data.created_date}" th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"></td>
                             <td><input type="text" maxlength="20" name="place" th:value="${data.place}" placeholder="住所を入力"></td>
                             <td><input type="text" maxlength="20" name="hometown" th:value="${data.hometown}" placeholder="出身地を入力">
                             </td>
-                            <td><input type="date" name="washing" th:value="${data.washing}"></td>
+                            <td><input type="date" name="washing" th:value="${data.washing}" th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"></td>
                             <td>
                                 <select name="now" id="status-select" th:value="${data.now}">
                                     <option value="入居中">入居中</option>
