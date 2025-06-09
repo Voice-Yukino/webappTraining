@@ -1,7 +1,10 @@
 package com.example.webapptraining.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +55,80 @@ public class jyohoController {
         }
 
         // 次のIDを取得
-        String sqlNext = "SELECT MIN(id) FROM orverview WHERE id > ?";
-        Integer nextId = jdbcTemplate.queryForObject(sqlNext, Integer.class, id);
+        String sqlNext = "SELECT MIN(o.id) AS id  FROM orverview o " +
+                "INNER JOIN \"update\" u ON o.id = u.update_id " +
+                "WHERE o.id > ?";
+        List<Object> paramsNext = new ArrayList<>();
+        List<String> conditionsNext = new ArrayList<>();
+        paramsNext.add(id);
+
+        if (name != null && !name.trim().isEmpty()) {
+            conditionsNext.add("LOWER(o.name) LIKE LOWER(?)");
+            paramsNext.add("%" + name.trim() + "%");
+        }
+        if (now != null && !now.trim().isEmpty()) {
+            conditionsNext.add("u.now = ?");
+            paramsNext.add(now);
+        }
+        if (createdDateBefore != null) {
+            conditionsNext.add("o.created_date <= ?");
+            paramsNext.add(createdDateBefore);
+        }
+        if (createdDateAfter != null) {
+            conditionsNext.add("o.created_date >= ?");
+            paramsNext.add(createdDateAfter);
+        }
+        if (washingBefore != null) {
+            conditionsNext.add("u.washing <= ?");
+            paramsNext.add(washingBefore);
+        }
+        if (washingAfter != null) {
+            conditionsNext.add("u.washing >= ?");
+            paramsNext.add(washingAfter);
+        }
+        if (!conditionsNext.isEmpty()) {
+            sqlNext += " AND " + String.join(" AND ", conditionsNext);
+        }
+
+        Integer nextId = jdbcTemplate.queryForObject(sqlNext, Integer.class, paramsNext.toArray());
 
         // 前のIDを取得
-        String sqlPrev = "SELECT MAX(id) FROM orverview WHERE id < ?";
-        Integer prevId = jdbcTemplate.queryForObject(sqlPrev, Integer.class, id);
+        String sqlPrev = "SELECT MAX(o.id) AS id FROM orverview o " +
+                "INNER JOIN \"update\" u ON o.id = u.update_id " +
+                "WHERE o.id < ?";
+        List<Object> paramsPrev = new ArrayList<>();
+        List<String> conditionsPrev = new ArrayList<>();
+        paramsPrev.add(id);
+        
+        if (name != null && !name.trim().isEmpty()) {
+            conditionsPrev.add("LOWER(o.name) LIKE LOWER(?)");
+            paramsPrev.add("%" + name.trim() + "%");
+        }
+        if (now != null && !now.trim().isEmpty()) {
+            conditionsPrev.add("u.now = ?");
+            paramsPrev.add(now);
+        }
+        if (createdDateBefore != null) {
+            conditionsPrev.add("o.created_date <= ?");
+            paramsPrev.add(createdDateBefore);
+        }
+        if (createdDateAfter != null) {
+            conditionsPrev.add("o.created_date >= ?");
+            paramsPrev.add(createdDateAfter);
+        }
+        if (washingBefore != null) {
+            conditionsPrev.add("u.washing <= ?");
+            paramsPrev.add(washingBefore);
+        }
+        if (washingAfter != null) {
+            conditionsPrev.add("u.washing >= ?");
+            paramsPrev.add(washingAfter);
+        }
+        if (!conditionsPrev.isEmpty()) {
+            sqlPrev += " AND " + String.join(" AND ", conditionsPrev);
+        }
+
+        Integer prevId = jdbcTemplate.queryForObject(sqlPrev, Integer.class, paramsPrev.toArray());
 
         // 取得したIDを Thymeleaf に渡す
         model.addAttribute("nextId", nextId);

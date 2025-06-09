@@ -89,11 +89,11 @@ public class homeController {
         model.addAttribute("washing_after", washingAfter);
 
         // 単体テスト確認のため使用
-        for (Map hoge : images) {
-            Object a = hoge.get("id");
-            Integer b = (Integer) a;
-            System.out.println(b);
-        }
+        // for (Map hoge : images) {
+        //     Object a = hoge.get("id");
+        //     Integer b = (Integer) a;
+        //     System.out.println(b);
+        // }
 
         return "home";
     }
