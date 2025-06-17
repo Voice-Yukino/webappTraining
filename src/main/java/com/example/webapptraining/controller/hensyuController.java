@@ -1,7 +1,13 @@
 package com.example.webapptraining.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Map;
+import java.awt.image.BufferedImage;
+import java.awt.Color;
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +30,22 @@ public class hensyuController {
     @Autowired
     public hensyuController(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+        // JPG変換のメソッド↓
+    public byte[] convertToJpg(byte[] imageBytes) throws IOException {
+        BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
+
+        BufferedImage newBufferedImage = new BufferedImage(
+                bufferedImage.getWidth(),
+                bufferedImage.getHeight(),
+                bufferedImage.TYPE_INT_RGB);
+
+        newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+
+        ByteArrayOutputStream jpgOutputStream = new ByteArrayOutputStream();
+        ImageIO.write(newBufferedImage, "jpg", jpgOutputStream);
+        return jpgOutputStream.toByteArray();
     }
 
     @GetMapping("/hensyu")
@@ -95,10 +117,11 @@ public class hensyuController {
             // データベースへの画像更新処理
             if (!file.isEmpty()) {
                 byte[] imgBytes = file.getBytes(); // ファイルをバイト配列に変換
+                byte[] jpgImgBytes = convertToJpg(imgBytes);//バイト列をJPGに変換
 
                 // photosテーブルの既存レコードを更新
                 String sqlPhotos = "UPDATE photos SET img = ? WHERE photos_id = ?";
-                jdbcTemplate.update(sqlPhotos, imgBytes, id);
+                jdbcTemplate.update(sqlPhotos, jpgImgBytes, id);
             }
 
             // orverviewテーブルのデータを更新

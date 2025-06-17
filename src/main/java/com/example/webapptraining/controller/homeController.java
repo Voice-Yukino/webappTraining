@@ -1,11 +1,17 @@
 package com.example.webapptraining.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,11 +46,19 @@ public class homeController {
 
         String sql = "SELECT photos_id, img FROM photos p " +
                 "INNER JOIN orverview o ON p.photos_id = o.id " +
+                "INNER JOIN details d ON o.id = d.details_id " +
                 "INNER JOIN \"update\" u ON o.id = u.update_id " +
                 "WHERE 1=1";
 
         if (name != null && !name.trim().isEmpty()) {
-            conditions.add("LOWER(o.name) LIKE LOWER(?)");
+            conditions.add(
+                "o.name LIKE ? " +
+                "OR d.place LIKE ? " +
+                "OR d.hometown LIKE ? " +
+                "OR u.memo LIKE ?");
+            params.add("%" + name.trim() + "%");
+            params.add("%" + name.trim() + "%");
+            params.add("%" + name.trim() + "%");
             params.add("%" + name.trim() + "%");
         }
         if (now != null && !now.trim().isEmpty()) {
@@ -76,6 +90,7 @@ public class homeController {
                 sql, params.toArray(), (rs, rowNum) -> {
                     Map<String, Object> imageMap = new HashMap<>();
                     imageMap.put("id", rs.getInt("photos_id"));
+                    byte[] imgBytes = rs.getBytes("img");
                     imageMap.put("image", Base64.getEncoder().encodeToString(rs.getBytes("img")));
                     return imageMap;
                 });
@@ -90,9 +105,9 @@ public class homeController {
 
         // 単体テスト確認のため使用
         // for (Map hoge : images) {
-        //     Object a = hoge.get("id");
-        //     Integer b = (Integer) a;
-        //     System.out.println(b);
+        // Object a = hoge.get("id");
+        // Integer b = (Integer) a;
+        // System.out.println(b);
         // }
 
         return "home";

@@ -56,6 +56,7 @@ public class jyohoController {
 
         // 次のIDを取得
         String sqlNext = "SELECT MIN(o.id) AS id  FROM orverview o " +
+                "INNER JOIN details d ON o.id = d.details_id " +
                 "INNER JOIN \"update\" u ON o.id = u.update_id " +
                 "WHERE o.id > ?";
         List<Object> paramsNext = new ArrayList<>();
@@ -63,7 +64,14 @@ public class jyohoController {
         paramsNext.add(id);
 
         if (name != null && !name.trim().isEmpty()) {
-            conditionsNext.add("LOWER(o.name) LIKE LOWER(?)");
+            conditionsNext.add(
+                    "(o.name LIKE ? " +
+                            "OR d.place LIKE ? " +
+                            "OR d.hometown LIKE ? " +
+                            "OR u.memo LIKE ?)");
+            paramsNext.add("%" + name.trim() + "%");
+            paramsNext.add("%" + name.trim() + "%");
+            paramsNext.add("%" + name.trim() + "%");
             paramsNext.add("%" + name.trim() + "%");
         }
         if (now != null && !now.trim().isEmpty()) {
@@ -94,14 +102,22 @@ public class jyohoController {
 
         // 前のIDを取得
         String sqlPrev = "SELECT MAX(o.id) AS id FROM orverview o " +
+                "INNER JOIN details d ON o.id = d.details_id " +
                 "INNER JOIN \"update\" u ON o.id = u.update_id " +
                 "WHERE o.id < ?";
         List<Object> paramsPrev = new ArrayList<>();
         List<String> conditionsPrev = new ArrayList<>();
         paramsPrev.add(id);
-        
+
         if (name != null && !name.trim().isEmpty()) {
-            conditionsPrev.add("LOWER(o.name) LIKE LOWER(?)");
+            conditionsPrev.add(
+                    "(o.name LIKE ? " +
+                            "OR d.place LIKE ? " +
+                            "OR d.hometown LIKE ? " +
+                            "OR u.memo LIKE ?)");
+            paramsPrev.add("%" + name.trim() + "%");
+            paramsPrev.add("%" + name.trim() + "%");
+            paramsPrev.add("%" + name.trim() + "%");
             paramsPrev.add("%" + name.trim() + "%");
         }
         if (now != null && !now.trim().isEmpty()) {
