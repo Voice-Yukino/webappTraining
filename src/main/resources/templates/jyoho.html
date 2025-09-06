@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/earlyaccess/nikukyu.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/stylesheet.css}" type="text/css">
+    <title>プロフィール</title>
+</head>
+
+<body>
+    <div class="background">
+        <header>
+            <div class="container">
+                <div class="header-left">
+                    <a href="/mansion/home" style="text-decoration: none; color: inherit;">
+                        <h1>ヌイグルミマンション</h1>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="prf">
+                <img th:src="'data:image/png;base64,' + ${profileImage}" alt="プロフィール画像" style="max-width: 200px;">
+                <div class="name-container">
+                    <h1 th:text="${data.name}">名前</h1>
+                    <form th:action="@{/mansion/hensyu}" method="GET">
+                        <button class="edit-btn">編集</button>
+                        <input type="hidden" name="id" th:value="${data.id}">
+                    </form>
+                    <form th:action="@{/mansion/home}" method="GET">
+                        <input type="hidden" name="name" th:value="${name}">
+                        <input type="hidden" name="id" th:value="${id}">
+                        <input type="hidden" name="now" th:value="${now}">
+                        <input type="hidden" name="created_date_before" th:value="${created_date_before}">
+                        <input type="hidden" name="created_date_after" th:value="${created_date_after}">
+                        <input type="hidden" name="washing_before" th:value="${washing_before}">
+                        <input type="hidden" name="washing_after" th:value="${washing_after}">
+
+                        <button type="submit" class="back-btn">戻る</button>
+                    </form>
+                </div>
+
+                <table>
+                    <tr>
+                        <th>登録日</th>
+                        <th>住所</th>
+                        <th>出身地</th>
+                        <th>お風呂</th>
+                        <th>現在</th>
+                    </tr>
+                    <tr>
+                        <td th:text="${data.created_date}">2024/3/15</td>
+                        <td th:text="${data.place}">住所</td>
+                        <td th:text="${data.hometown}">出身地</td>
+                        <td th:text="${data.washing}">2025/04/20</td>
+                        <td th:text="${data.now}">入居中</td>
+                    </tr>
+                </table>
+                <table class="memo-table">
+                    <tr>
+                        <th>memo</th>
+                    </tr>
+                    <tr>
+                        <td th:text="${data.memo}">memo</td>
+                    </tr>
+                </table>
+                <div class="pagination">
+                    <form th:action="@{/mansion/profiel}" method="GET" th:if="${hasPrev}">
+                        <input type="hidden" name="id" th:value="${prevId}">
+                        <input type="hidden" name="name" th:value="${name}">
+                        <input type="hidden" name="now" th:value="${now}">
+                        <input type="hidden" name="created_date_before" th:value="${created_date_before}">
+                        <input type="hidden" name="created_date_after" th:value="${created_date_after}">
+                        <input type="hidden" name="washing_before" th:value="${washing_before}">
+                        <input type="hidden" name="washing_after" th:value="${washing_after}">
+                        <button type="submit" class="prev-btn">◀　前へ</button>
+                    </form>
+                    <form th:action="@{/mansion/profiel}" method="GET" th:if="${hasNext}">
+                        <input type="hidden" name="id" th:value="${nextId}">
+                        <input type="hidden" name="name" th:value="${name}">
+                        <input type="hidden" name="now" th:value="${now}">
+                        <input type="hidden" name="created_date_before" th:value="${created_date_before}">
+                        <input type="hidden" name="created_date_after" th:value="${created_date_after}">
+                        <input type="hidden" name="washing_before" th:value="${washing_before}">
+                        <input type="hidden" name="washing_after" th:value="${washing_after}">
+                        <button type="submit" class="next-btn">次へ　▶</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
